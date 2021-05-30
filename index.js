@@ -14,6 +14,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const ApartmentsCollection = client.db('ApartmentService').collection("Apartments");
+  const BookingsCollection = client.db('ApartmentService').collection("Bookings");
   app.post('/addApartment', (req, res) => {
     const newApartment = req.body;
     ApartmentsCollection.insertOne(newApartment)
@@ -36,7 +37,7 @@ client.connect(err => {
       })
       app.post('/bookApartment', (req, res) => {
         const bookApartment = req.body;
-        bookingCollection.insertOne(bookApartment)
+        BookingsCollection.insertOne(bookApartment)
             .then(result => {
                 res.send(result.insertedCount > 0)
             })
