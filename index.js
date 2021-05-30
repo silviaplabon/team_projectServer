@@ -34,6 +34,13 @@ client.connect(err => {
             res.send(result)
           })
       })
+      app.post('/bookApartment', (req, res) => {
+        const bookApartment = req.body;
+        bookingCollection.insertOne(bookApartment)
+            .then(result => {
+                res.send(result.insertedCount > 0)
+            })
+    });
 });
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
