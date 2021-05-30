@@ -24,24 +24,31 @@ client.connect(err => {
   })
   app.get('/apartmentData', (req, res) => {
     ApartmentsCollection.find({}).toArray((err, apartments) => {
-        res.send(apartments)
+      res.send(apartments)
+    })
+  })
+
+  //   finding specific single apartment data
+  app.get('/apartmentSpecificData/:id', (req, res) => {
+    ApartmentsCollection.findOne({ _id: ObjectID(req.params.id) })
+      .then(result => {
+        res.send(result)
       })
   })
- 
-    //   finding specific single apartment data
-      app.get('/apartmentSpecificData/:id', (req, res) => {
-        ApartmentsCollection.findOne({ _id: ObjectID(req.params.id) })
-          .then(result => {
-            res.send(result)
-          })
+
+  app.get('/adminBookingsCollection', (req, res) => {
+    BookingsCollection.find({})
+      .toArray((err, products) => {
+        res.send(products)
       })
-      app.post('/bookApartment', (req, res) => {
-        const bookApartment = req.body;
-        BookingsCollection.insertOne(bookApartment)
-            .then(result => {
-                res.send(result.insertedCount > 0)
-            })
-    });
+  })
+  app.post('/bookApartment', (req, res) => {
+    const bookApartment = req.body;
+    BookingsCollection.insertOne(bookApartment)
+      .then(result => {
+        res.send(result.insertedCount > 0)
+      })
+  });
 });
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
