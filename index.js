@@ -13,8 +13,8 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.mcsxh.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-  const ApartmentsCollection = client.db('ApartmentService').collection("Apartments");
-  const BookingsCollection = client.db('ApartmentService').collection("Bookings");
+  const ApartmentsCollection = client.db('ApartmentsService').collection("Apartments");
+  const BookingsCollection = client.db('ApartmentsService').collection("Bookings");
   app.post('/addApartment', (req, res) => {
     const newApartment = req.body;
     ApartmentsCollection.insertOne(newApartment)
